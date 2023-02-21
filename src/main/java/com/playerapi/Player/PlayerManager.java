@@ -17,11 +17,10 @@ public class PlayerManager implements Listener {
         System.out.println(adventurer.getUuid());
         System.out.println(player.getUniqueId());
         if(adventurer.getUuid().toString().replaceAll("\\s+","").equals(player.getUniqueId().toString().replaceAll("\\s+",""))){
-            String path = new Playerfile().createFolder(player.getUniqueId().toString(), plugin);
-            System.out.println("criando Json");
             new Playerfile().createJsonAdventurer(adventurer, plugin);
-
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lLogado com sucesso."));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lJson."));
+            Adventurer adventurer1 = new Playerfile().returnAdventurer(player.getUniqueId().toString(), plugin);
+            player.sendMessage(adventurer1.getEmail());
         }
         else{
             player.kickPlayer("Player não bate com uuid informado.");

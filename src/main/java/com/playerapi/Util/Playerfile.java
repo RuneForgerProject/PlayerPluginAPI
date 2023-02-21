@@ -3,34 +3,18 @@ package com.playerapi.Util;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import org.bukkit.plugin.Plugin;
 import com.playerapi.Model.Adventurer;
 
 public class Playerfile {
-    //Plugin plugin = RuneForger.getPlugin(RuneForger.class);
-
     public void create(String uuid, String fileName) {
     }
 
-    public String createFolder(String UUID, Plugin plugin) {
-        File folder = new File(plugin.getDataFolder() + File.separator + "Players", UUID);
-        if (!folder.exists()) {
-            try {
-                folder.mkdirs();
-                return folder.getAbsolutePath();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                return null;
-            }
-        }
-        else{
-            System.out.println("Já existe");
-            return folder.getAbsolutePath();
-        }
-    }
     public void createJsonAdventurer(Adventurer adventurer, Plugin plugin){
         String path;
         File folder = new File(plugin.getDataFolder() + File.separator + "Players", adventurer.getUuid());
@@ -65,7 +49,25 @@ public class Playerfile {
         }
     }
 
-    public void readJsonAdventurer(){
+    public Adventurer returnAdventurer(String uuid, Plugin plugin){
+        String path;
+        File folder = new File(plugin.getDataFolder() + File.separator + "Players", uuid);
 
+        if (folder.exists()) {
+            System.out.println("Encontrado caminho");
+            path = folder.getAbsolutePath();
+        }
+        else{
+            return null;
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        InputStream is = Adventurer.class.getResourceAsStream(path + "\\playerData.json");
+        try {
+            Adventurer adventurer = mapper.readValue(is, Adventurer.class);
+            return adventurer;
+        } catch (IOException e) {
+            return null;
+        }
     }
 }
