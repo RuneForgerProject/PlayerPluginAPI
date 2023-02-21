@@ -2,32 +2,16 @@ package com.playerapi;
 
 import com.playerapi.Player.PlayerManager;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 public final class PlayerApi {
     public static void main(String[] args) {
-        new PlayerApi().test(null);
-        new PlayerApi().testPlayer(null);
+
     }
 
-    public String test(String test) {
-        if (test != null) {
-            return "Hello " + test;
-        }
-        return null;
-    }
-
-    public String testPlayer(Player player) {
-        if (player != null) {
-            String nick = player.getName();
-            player.sendMessage("A principio supimpa.");
-            return "Ok" + nick;
-        }
-        return null;
-    }
-
-    public String playerEntry(Player player){
+    public String playerEntry(Player player, Plugin plugin){
         PlayerManager playerManager = new PlayerManager();
-        playerManager.PlayerEntry(player);
+        playerManager.PlayerEntry(player, plugin);
         return "OK" + player.getName();
     }
 }
