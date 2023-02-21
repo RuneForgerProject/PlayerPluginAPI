@@ -1,0 +1,4 @@
+name: PlayerApi
+version: '${project.version}'
+main: com.playerapi.Main
+api-version: 1.19
